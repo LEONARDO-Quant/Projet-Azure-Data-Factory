@@ -1,0 +1,55 @@
+{
+	"name": "ODS_Bankia_Transactions",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ODS_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Transaction",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Date_Transaction",
+				"type": "date"
+			},
+			{
+				"name": "ID_Client",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_Produit",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Type_Transaction",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Montant",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "ID_Agence",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "Transactions"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

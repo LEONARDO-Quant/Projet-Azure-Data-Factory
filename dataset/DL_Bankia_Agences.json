@@ -1,0 +1,26 @@
+{
+	"name": "DL_Bankia_Agences",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DL_BANKIA"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Agences",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Dataset_Bankia2025.xlsx",
+				"folderPath": "ressources",
+				"fileSystem": "bankia-data"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

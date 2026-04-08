@@ -1,0 +1,53 @@
+{
+	"name": "ODS_Bankia_Clients",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ODS_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Client",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Nom_Client",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Prenom_Client",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Telephone",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Ville",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Pays",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Segment_Client",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "Clients"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

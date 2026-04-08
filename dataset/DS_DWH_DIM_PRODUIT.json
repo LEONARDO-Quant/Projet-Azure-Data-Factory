@@ -1,0 +1,51 @@
+{
+	"name": "DS_DWH_DIM_PRODUIT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "produit_rowid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "reference_produit",
+				"type": "varchar"
+			},
+			{
+				"name": "nom",
+				"type": "varchar"
+			},
+			{
+				"name": "prix",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "reference_categorie",
+				"type": "varchar"
+			},
+			{
+				"name": "categorie",
+				"type": "varchar"
+			},
+			{
+				"name": "description",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "dim_produit"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

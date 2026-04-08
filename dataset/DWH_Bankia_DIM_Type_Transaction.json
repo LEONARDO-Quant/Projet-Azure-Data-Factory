@@ -1,0 +1,30 @@
+{
+	"name": "DWH_Bankia_DIM_Type_Transaction",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWH_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Type_Transaction",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Type_Transaction",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "DIM_TYPE_TRANSACTION"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

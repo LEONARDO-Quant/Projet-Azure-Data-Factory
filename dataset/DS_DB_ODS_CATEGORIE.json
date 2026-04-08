@@ -1,0 +1,33 @@
+{
+	"name": "DS_DB_ODS_CATEGORIE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "reference_categorie",
+				"type": "varchar"
+			},
+			{
+				"name": "categorie",
+				"type": "varchar"
+			},
+			{
+				"name": "description",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "categorie"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

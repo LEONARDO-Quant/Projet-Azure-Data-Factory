@@ -1,0 +1,46 @@
+{
+	"name": "DWH_Bankia_DIM_Produit",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWH_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Produit",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Nom_Produit",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Categorie_Bancaire",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Taux_Interet",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "Frais_Gestion",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "DIM_PRODUIT"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

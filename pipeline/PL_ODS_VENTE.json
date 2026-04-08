@@ -1,0 +1,144 @@
+{
+	"name": "PL_ODS_VENTE",
+	"properties": {
+		"activities": [
+			{
+				"name": "ODS_VENTES",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE ODS.VENTE",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"parallelCopies": 1,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "IDVente",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "IDVente",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Date_vente",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Date_vente",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "Reference Produit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Reference_Produit",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Quantite",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Quantite",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Enseigne",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Enseigne",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Prix Total",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Prix_Total",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_DL_VENTE",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DB_ODS_VENTE",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "SDA26_PL_ODS"
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-04T03:51:52Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,37 @@
+{
+	"name": "PL_DWH_FACT_TRANSACTIONS",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF_DWH_FACT_TRANSACTIONS",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_DWH_FACT_TRANSACTIONS",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "PL_DWH_Bankia"
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-02T03:56:12Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

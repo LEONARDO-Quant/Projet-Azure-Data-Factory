@@ -1,0 +1,41 @@
+{
+	"name": "DS_DL_CATEGORIE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "categories.csv",
+				"folderPath": "Fichier client",
+				"fileSystem": "sda"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Reference_Categorie",
+				"type": "String"
+			},
+			{
+				"name": "Categorie",
+				"type": "String"
+			},
+			{
+				"name": "Description",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

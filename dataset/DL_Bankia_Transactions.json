@@ -1,0 +1,55 @@
+{
+	"name": "DL_Bankia_Transactions",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DL_BANKIA"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Transactions",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Dataset_Bankia2025.xlsx",
+				"folderPath": "ressources",
+				"fileSystem": "bankia-data"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "ID_Transaction",
+				"type": "String"
+			},
+			{
+				"name": "Date_Transaction",
+				"type": "String"
+			},
+			{
+				"name": "ID_Client",
+				"type": "String"
+			},
+			{
+				"name": "ID_Produit",
+				"type": "String"
+			},
+			{
+				"name": "Type_Transaction",
+				"type": "String"
+			},
+			{
+				"name": "Montant",
+				"type": "String"
+			},
+			{
+				"name": "ID_Agence",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

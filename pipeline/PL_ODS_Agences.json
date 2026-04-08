@@ -1,0 +1,116 @@
+{
+	"name": "PL_ODS_Agences",
+	"properties": {
+		"activities": [
+			{
+				"name": "PL_ODS_Agences",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE ODS.Agences",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"parallelCopies": 1,
+					"dataIntegrationUnits": 4,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ID_Agence",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID_Agence",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Nom_Agence",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Nom_Agence",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ville",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ville",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Pays",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Pays",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DL_Bankia_Agences",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ODS_Bankia_Agences",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PL_ODS_Bankia"
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-03T13:04:56Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,37 @@
+{
+	"name": "ODS_Bankia_Agences",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ODS_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Agence",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Nom_Agence",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Ville",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Pays",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "Agences"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

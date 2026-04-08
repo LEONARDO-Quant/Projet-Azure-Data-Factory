@@ -1,0 +1,56 @@
+{
+	"name": "DWH_Bankia_FACT_Transactions",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWH_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Transaction",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_Client",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_Produit",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_Agence",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Montant",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "ID_Type_Transaction",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Date_Transaction",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "FACT_TRANSACTIONS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

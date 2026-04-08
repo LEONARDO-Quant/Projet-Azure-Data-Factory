@@ -1,0 +1,203 @@
+{
+	"name": "DF_FACT_VENTE",
+	"properties": {
+		"folder": {
+			"name": "SDA26_DF"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_DB_ODS_VENTE",
+						"type": "DatasetReference"
+					},
+					"name": "ODSVENTE"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_DWH_DIM_ENSEIGNE",
+						"type": "DatasetReference"
+					},
+					"name": "DWHDIMENSEIGNE"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_DWH_DIM_PRODUIT",
+						"type": "DatasetReference"
+					},
+					"name": "DWHDIMPRODUIT"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_DWH_DIM_CALENDRIER",
+						"type": "DatasetReference"
+					},
+					"name": "DWHDIMCALENDRIER"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_DWH_FACT_VENTE",
+						"type": "DatasetReference"
+					},
+					"name": "DWHFACTVENTE"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JOINVENTEENSEIGNE"
+				},
+				{
+					"name": "SELECTVENTEENSEIGNE"
+				},
+				{
+					"name": "JOINCENTEENSEIGNEPRODUIT"
+				},
+				{
+					"name": "SELECTVENTEPRODUIT"
+				},
+				{
+					"name": "JOINVENTECALENDRIER"
+				},
+				{
+					"name": "SELECTVENTECALENDRIER"
+				},
+				{
+					"name": "ALTERROWVENTE"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          IDVente as integer,",
+				"          Date_vente as date,",
+				"          Reference_Produit as string,",
+				"          Quantite as integer,",
+				"          Enseigne as string,",
+				"          Prix_Total as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSVENTE",
+				"source(output(",
+				"          enseigne_rowid as integer,",
+				"          enseigne as string,",
+				"          ville as string,",
+				"          adresse as string,",
+				"          {civilité} as string,",
+				"          gerant as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DWHDIMENSEIGNE",
+				"source(output(",
+				"          produit_rowid as integer,",
+				"          reference_produit as string,",
+				"          nom as string,",
+				"          prix as integer,",
+				"          reference_categorie as string,",
+				"          categorie as string,",
+				"          description as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DWHDIMPRODUIT",
+				"source(output(",
+				"          idDate as integer,",
+				"          Date_cal as date,",
+				"          Year as integer,",
+				"          Month as integer,",
+				"          Day as integer,",
+				"          Week as integer,",
+				"          Quarter as integer,",
+				"          DayOfWeek as integer,",
+				"          DayName as string,",
+				"          MonthName as string,",
+				"          IsWeekend as boolean,",
+				"          IsHoliday as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DWHDIMCALENDRIER",
+				"ODSVENTE, DWHDIMENSEIGNE join(ODSVENTE@Enseigne == DWHDIMENSEIGNE@enseigne,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JOINVENTEENSEIGNE",
+				"JOINVENTEENSEIGNE select(mapColumn(",
+				"          IDVente,",
+				"          Date_vente,",
+				"          Reference_Produit,",
+				"          Quantite,",
+				"          Prix_Total,",
+				"          enseigne_rowid",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SELECTVENTEENSEIGNE",
+				"SELECTVENTEENSEIGNE, DWHDIMPRODUIT join(SELECTVENTEENSEIGNE@Reference_Produit == DWHDIMPRODUIT@reference_produit,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JOINCENTEENSEIGNEPRODUIT",
+				"JOINCENTEENSEIGNEPRODUIT select(mapColumn(",
+				"          IDVente,",
+				"          Date_vente,",
+				"          Quantite,",
+				"          Prix_Total,",
+				"          enseigne_rowid,",
+				"          produit_rowid",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SELECTVENTEPRODUIT",
+				"SELECTVENTEPRODUIT, DWHDIMCALENDRIER join(Date_vente == Date_cal,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JOINVENTECALENDRIER",
+				"JOINVENTECALENDRIER select(mapColumn(",
+				"          IDVente,",
+				"          Quantite,",
+				"          Prix_Total,",
+				"          enseigne_rowid,",
+				"          produit_rowid,",
+				"          idDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SELECTVENTECALENDRIER",
+				"SELECTVENTECALENDRIER alterRow(upsertIf(1==1)) ~> ALTERROWVENTE",
+				"ALTERROWVENTE sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          IDVente as integer,",
+				"          idDate as integer,",
+				"          produit_rowid as integer,",
+				"          enseigne_rowid as integer,",
+				"          quantite as integer,",
+				"          Prix_Total as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['IDVente'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          IDVente,",
+				"          idDate,",
+				"          produit_rowid,",
+				"          enseigne_rowid,",
+				"          quantite = Quantite,",
+				"          Prix_Total",
+				"     )) ~> DWHFACTVENTE"
+			]
+		}
+	}
+}

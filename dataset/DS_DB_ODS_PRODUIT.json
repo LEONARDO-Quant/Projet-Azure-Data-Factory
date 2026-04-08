@@ -1,0 +1,38 @@
+{
+	"name": "DS_DB_ODS_PRODUIT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "reference_produit",
+				"type": "varchar"
+			},
+			{
+				"name": "nom",
+				"type": "varchar"
+			},
+			{
+				"name": "reference_categorie",
+				"type": "varchar"
+			},
+			{
+				"name": "prix",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "produit"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

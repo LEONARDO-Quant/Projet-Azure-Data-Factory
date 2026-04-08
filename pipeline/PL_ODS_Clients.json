@@ -1,0 +1,167 @@
+{
+	"name": "PL_ODS_Clients",
+	"properties": {
+		"activities": [
+			{
+				"name": "PL_ODS_Clients",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE ODS.Clients",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"parallelCopies": 1,
+					"dataIntegrationUnits": 4,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ID_Client",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID_Client",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Nom_Client",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Nom_Client",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Prenom_Client",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Prenom_Client",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Téléphone",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Telephone",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ville",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ville",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Pays",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Pays",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Segment_Client",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Segment_Client",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DL_Bankia_Clients",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ODS_Bankia_Clients",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PL_ODS_Bankia"
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-03T13:04:56Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

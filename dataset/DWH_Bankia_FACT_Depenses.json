@@ -1,0 +1,45 @@
+{
+	"name": "DWH_Bankia_FACT_Depenses",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWH_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Depense",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_Agence",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Date_Calendrier",
+				"type": "date"
+			},
+			{
+				"name": "Categorie_Depense",
+				"type": "varchar"
+			},
+			{
+				"name": "Montant",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "FACT_DEPENSES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

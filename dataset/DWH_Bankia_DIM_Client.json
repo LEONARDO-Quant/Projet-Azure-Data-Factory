@@ -1,0 +1,54 @@
+{
+	"name": "DWH_Bankia_DIM_Client",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWH_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Client",
+				"type": "varchar"
+			},
+			{
+				"name": "Nom",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Prenom",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Telephone",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Ville",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Pays",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Segment_Client",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "DIM_CLIENT"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,41 @@
+{
+	"name": "ODS_Bankia_Depenses",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ODS_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Depense",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Date_Depense",
+				"type": "date"
+			},
+			{
+				"name": "Categorie_Depense",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Montant",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID_Agence",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "Depenses"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

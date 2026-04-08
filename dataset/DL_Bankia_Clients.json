@@ -1,0 +1,61 @@
+{
+	"name": "DL_Bankia_Clients",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DL_BANKIA"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Clients.csv",
+				"folderPath": "ressources",
+				"fileSystem": "bankia-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID_Client",
+				"type": "String"
+			},
+			{
+				"name": "Nom_Client",
+				"type": "String"
+			},
+			{
+				"name": "Prenom_Client",
+				"type": "String"
+			},
+			{
+				"name": "Email",
+				"type": "String"
+			},
+			{
+				"name": "Téléphone",
+				"type": "String"
+			},
+			{
+				"name": "Ville",
+				"type": "String"
+			},
+			{
+				"name": "Pays",
+				"type": "String"
+			},
+			{
+				"name": "Segment_Client",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

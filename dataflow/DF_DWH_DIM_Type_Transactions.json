@@ -1,0 +1,79 @@
+{
+	"name": "DF_DWH_DIM_Type_Transactions",
+	"properties": {
+		"folder": {
+			"name": "DF_BANKIA"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_Bankia_Transactions",
+						"type": "DatasetReference"
+					},
+					"name": "ODSBankiaTransactions"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DWH_Bankia_DIM_Type_Transaction",
+						"type": "DatasetReference"
+					},
+					"name": "DWHDIMTypeTransaction"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SELECTTypeTransaction"
+				},
+				{
+					"name": "AGGREGATE"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_Transaction as integer,",
+				"          Date_Transaction as date,",
+				"          ID_Client as integer,",
+				"          ID_Produit as integer,",
+				"          Type_Transaction as string,",
+				"          Montant as decimal(18,2),",
+				"          ID_Agence as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSBankiaTransactions",
+				"ODSBankiaTransactions select(mapColumn(",
+				"          ID_Transaction,",
+				"          ID_Client,",
+				"          Type_Transaction",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SELECTTypeTransaction",
+				"SELECTTypeTransaction aggregate(groupBy(Type_Transactions_clean = toString(trim(Type_Transaction))),",
+				"     ID_Transaction = count(ID_Transaction)) ~> AGGREGATE",
+				"AGGREGATE sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_Type_Transaction as integer,",
+				"          Type_Transaction as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          Type_Transaction = Type_Transactions_clean",
+				"     )) ~> DWHDIMTypeTransaction"
+			]
+		}
+	}
+}

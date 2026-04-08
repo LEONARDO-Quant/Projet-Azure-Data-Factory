@@ -1,0 +1,120 @@
+{
+	"name": "PL_ODS_PRODUIT",
+	"properties": {
+		"activities": [
+			{
+				"name": "ODS_PRODUIT",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE ODS.PRODUIT",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"parallelCopies": 1,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Reference_Produit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reference_produit",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Nom",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "nom",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reference_Categorie",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reference_categorie",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Prix",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "prix",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_DL_PRODUIT",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DB_ODS_PRODUIT",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "SDA26_PL_ODS"
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-04T03:51:52Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

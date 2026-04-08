@@ -1,0 +1,53 @@
+{
+	"name": "DS_DL_VENTE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ventes.csv",
+				"folderPath": "Fichier client",
+				"fileSystem": "sda"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "IDVente",
+				"type": "String"
+			},
+			{
+				"name": "Date_vente",
+				"type": "String"
+			},
+			{
+				"name": "Reference Produit",
+				"type": "String"
+			},
+			{
+				"name": "Quantite",
+				"type": "String"
+			},
+			{
+				"name": "Enseigne",
+				"type": "String"
+			},
+			{
+				"name": "Prix Total",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

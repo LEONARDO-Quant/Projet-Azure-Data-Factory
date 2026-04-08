@@ -1,0 +1,41 @@
+{
+	"name": "DS_DB_ODS_ENSEIGNE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "enseigne",
+				"type": "varchar"
+			},
+			{
+				"name": "ville",
+				"type": "varchar"
+			},
+			{
+				"name": "adresse",
+				"type": "varchar"
+			},
+			{
+				"name": "civilité",
+				"type": "varchar"
+			},
+			{
+				"name": "gerant",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "enseigne"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,41 @@
+{
+	"name": "ODS_Bankia_Produits_Bancaires",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ODS_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_Produit",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Nom_Produit",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Categorie",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Taux_Interet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Frais_Gestion",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "Produits_Bancaires"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

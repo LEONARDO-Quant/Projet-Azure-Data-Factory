@@ -1,0 +1,48 @@
+{
+	"name": "DS_DB_ODS_VENTE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "IDVente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Date_vente",
+				"type": "date"
+			},
+			{
+				"name": "Reference_Produit",
+				"type": "varchar"
+			},
+			{
+				"name": "Quantite",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Enseigne",
+				"type": "varchar"
+			},
+			{
+				"name": "Prix_Total",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "vente"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

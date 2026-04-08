@@ -1,0 +1,112 @@
+{
+	"name": "DF_DIM_PRODUIT",
+	"properties": {
+		"folder": {
+			"name": "SDA26_DF"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_DB_ODS_PRODUIT",
+						"type": "DatasetReference"
+					},
+					"name": "ODSPRODUIT"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_DB_ODS_CATEGORIE",
+						"type": "DatasetReference"
+					},
+					"name": "ODSCATEGORIE"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_DWH_DIM_PRODUIT",
+						"type": "DatasetReference"
+					},
+					"name": "DWHDIMPRODUIT"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JOINPRODUITCATEGORIE"
+				},
+				{
+					"name": "SELECT"
+				},
+				{
+					"name": "ALTERROW"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          reference_produit as string,",
+				"          nom as string,",
+				"          reference_categorie as string,",
+				"          prix as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSPRODUIT",
+				"source(output(",
+				"          reference_categorie as string,",
+				"          categorie as string,",
+				"          description as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSCATEGORIE",
+				"ODSPRODUIT, ODSCATEGORIE join(ODSPRODUIT@reference_categorie == ODSCATEGORIE@reference_categorie,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JOINPRODUITCATEGORIE",
+				"JOINPRODUITCATEGORIE select(mapColumn(",
+				"          reference_produit,",
+				"          nom,",
+				"          prix,",
+				"          reference_categorie = ODSCATEGORIE@reference_categorie,",
+				"          categorie,",
+				"          description",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SELECT",
+				"SELECT alterRow(upsertIf(1==1)) ~> ALTERROW",
+				"ALTERROW sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          produit_rowid as integer,",
+				"          reference_produit as string,",
+				"          nom as string,",
+				"          prix as integer,",
+				"          reference_categorie as string,",
+				"          categorie as string,",
+				"          description as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['reference_produit','reference_categorie'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          reference_produit,",
+				"          nom,",
+				"          prix,",
+				"          reference_categorie,",
+				"          categorie,",
+				"          description",
+				"     )) ~> DWHDIMPRODUIT"
+			]
+		}
+	}
+}

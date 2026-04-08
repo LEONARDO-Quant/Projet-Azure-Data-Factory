@@ -1,0 +1,132 @@
+{
+	"name": "PL_ODS_Produits_Bancaires",
+	"properties": {
+		"activities": [
+			{
+				"name": "PL_ODS_Produits_Bancaires",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE ODS.Produits_Bancaires",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"parallelCopies": 1,
+					"dataIntegrationUnits": 4,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ID_Produit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID_Produit",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Nom_Produit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Nom_Produit",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Catégorie",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Categorie_Bancaire",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Taux_Intérêt",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Taux_Interet",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 5
+								}
+							},
+							{
+								"source": {
+									"name": "Frais_Gestion",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Frais_Gestion",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 5
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DL_Bankia_Produits_Bancaires",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ODS_Bankia_Produits_Bancaires",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PL_ODS_Bankia"
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-04T06:28:25Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

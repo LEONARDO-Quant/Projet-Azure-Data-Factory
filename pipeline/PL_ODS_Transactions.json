@@ -1,0 +1,152 @@
+{
+	"name": "PL_ODS_Transactions",
+	"properties": {
+		"activities": [
+			{
+				"name": "PL_ODS_Transactions",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE ODS.Transactions",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"parallelCopies": 1,
+					"dataIntegrationUnits": 4,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ID_Transaction",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID_Transaction",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Date_Transaction",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Date_Transaction",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "ID_Client",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID_Client",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ID_Produit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID_Produit",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Type_Transaction",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Type_Transaction",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Montant",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Montant",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ID_Agence",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID_Agence",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DL_Bankia_Transactions",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ODS_Bankia_Transactions",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PL_ODS_Bankia"
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-04T09:40:24Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

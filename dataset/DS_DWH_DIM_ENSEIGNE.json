@@ -1,0 +1,46 @@
+{
+	"name": "DS_DWH_DIM_ENSEIGNE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "enseigne_rowid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "enseigne",
+				"type": "varchar"
+			},
+			{
+				"name": "ville",
+				"type": "varchar"
+			},
+			{
+				"name": "adresse",
+				"type": "varchar"
+			},
+			{
+				"name": "civilité",
+				"type": "varchar"
+			},
+			{
+				"name": "gerant",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "dim_enseigne"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

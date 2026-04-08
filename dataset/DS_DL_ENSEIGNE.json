@@ -1,0 +1,49 @@
+{
+	"name": "DS_DL_ENSEIGNE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "enseignes.txt",
+				"folderPath": "Fichier client",
+				"fileSystem": "sda"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Enseigne",
+				"type": "String"
+			},
+			{
+				"name": "Ville",
+				"type": "String"
+			},
+			{
+				"name": "Adresse",
+				"type": "String"
+			},
+			{
+				"name": "civilite",
+				"type": "String"
+			},
+			{
+				"name": "gerant",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

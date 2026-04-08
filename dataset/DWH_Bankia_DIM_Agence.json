@@ -1,0 +1,49 @@
+{
+	"name": "DWH_Bankia_DIM_Agence",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWH_BANKIA"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "AgenceKey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_Agence",
+				"type": "varchar"
+			},
+			{
+				"name": "Nom_Agence",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Montant",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "Categorie_Depense",
+				"type": "varchar"
+			},
+			{
+				"name": "Date_Depense",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "DIM_AGENCE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

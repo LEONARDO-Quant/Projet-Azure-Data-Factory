@@ -1,0 +1,51 @@
+{
+	"name": "DS_DWH_FACT_VENTE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SDA26_JEUX_DONNEES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "IDVente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "idDate",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "produit_rowid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "enseigne_rowid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "quantite",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Prix_Total",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "DWH",
+			"table": "fact_vente"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

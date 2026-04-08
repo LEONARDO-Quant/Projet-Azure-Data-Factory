@@ -1,0 +1,111 @@
+{
+	"name": "DF_DWH_FACT_TRANSACTIONS",
+	"properties": {
+		"folder": {
+			"name": "DF_BANKIA"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_Bankia_Transactions",
+						"type": "DatasetReference"
+					},
+					"name": "ODSBankiaTransactions"
+				},
+				{
+					"dataset": {
+						"referenceName": "DWH_Bankia_DIM_Type_Transaction",
+						"type": "DatasetReference"
+					},
+					"name": "DWHBankiaTypeTransactions"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DWH_Bankia_FACT_Transactions",
+						"type": "DatasetReference"
+					},
+					"name": "DWHFactTransactions"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JOINTypeTransactions"
+				},
+				{
+					"name": "SELECT"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_Transaction as integer,",
+				"          Date_Transaction as date,",
+				"          ID_Client as integer,",
+				"          ID_Produit as integer,",
+				"          Type_Transaction as string,",
+				"          Montant as decimal(18,2),",
+				"          ID_Agence as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSBankiaTransactions",
+				"source(output(",
+				"          ID_Type_Transaction as integer,",
+				"          Type_Transaction as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DWHBankiaTypeTransactions",
+				"ODSBankiaTransactions, DWHBankiaTypeTransactions join(ODSBankiaTransactions@Type_Transaction == DWHBankiaTypeTransactions@Type_Transaction,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JOINTypeTransactions",
+				"JOINTypeTransactions select(mapColumn(",
+				"          ID_Transaction,",
+				"          Date_Transaction,",
+				"          ID_Client,",
+				"          ID_Produit,",
+				"          Montant,",
+				"          ID_Agence,",
+				"          ID_Type_Transaction",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SELECT",
+				"SELECT sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_Transaction as integer,",
+				"          ID_Client as integer,",
+				"          ID_Produit as integer,",
+				"          ID_Agence as integer,",
+				"          Montant as decimal(18,2),",
+				"          ID_Type_Transaction as integer,",
+				"          Date_Transaction as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID_Transaction,",
+				"          ID_Client,",
+				"          ID_Produit,",
+				"          ID_Agence,",
+				"          Montant,",
+				"          ID_Type_Transaction,",
+				"          Date_Transaction",
+				"     )) ~> DWHFactTransactions"
+			]
+		}
+	}
+}

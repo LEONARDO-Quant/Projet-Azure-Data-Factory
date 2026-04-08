@@ -1,0 +1,9 @@
+{
+	"name": "INSTSDA",
+	"location": "francecentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "40b2179b-ac36-489b-a180-5bdb07a28d92",
+		"tenantId": "8c6f9078-037e-4261-a583-52a944e55f7f"
+	}
+}

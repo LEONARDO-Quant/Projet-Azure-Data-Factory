@@ -1,0 +1,78 @@
+{
+	"name": "DF_DIM_ENSEIGNE",
+	"properties": {
+		"folder": {
+			"name": "SDA26_DF"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_DB_ODS_ENSEIGNE",
+						"type": "DatasetReference"
+					},
+					"name": "ODSENSEIGNE"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_DWH_DIM_ENSEIGNE",
+						"type": "DatasetReference"
+					},
+					"name": "DWHDIMENSEIGNE"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ALTERROWENSEIGNE"
+				},
+				{
+					"name": "TRANSFORMCIVILITE"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          enseigne as string,",
+				"          ville as string,",
+				"          adresse as string,",
+				"          {civilité} as string,",
+				"          gerant as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSENSEIGNE",
+				"TRANSFORMCIVILITE alterRow(upsertIf(1==1)) ~> ALTERROWENSEIGNE",
+				"ODSENSEIGNE derive({civilité} = iif({civilité} == 'M', 'Monsieur', 'Madame')) ~> TRANSFORMCIVILITE",
+				"ALTERROWENSEIGNE sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          enseigne_rowid as integer,",
+				"          enseigne as string,",
+				"          ville as string,",
+				"          adresse as string,",
+				"          {civilité} as string,",
+				"          gerant as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['enseigne'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          enseigne,",
+				"          ville,",
+				"          adresse,",
+				"          {civilité},",
+				"          gerant",
+				"     )) ~> DWHDIMENSEIGNE"
+			]
+		}
+	}
+}
